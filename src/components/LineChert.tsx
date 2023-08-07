@@ -24,6 +24,18 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  scales: {
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+  },
   plugins: {
     legend: {
       position: "top" as const,
@@ -44,6 +56,7 @@ const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
 export const data = {
   labels,
+
   datasets: [
     {
       label: "Dataset 1",
