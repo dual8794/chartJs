@@ -1,11 +1,4 @@
-import {
-  AppShell,
-  Container,
-  Grid,
-  Group,
-  Header,
-  Navbar,
-} from "@mantine/core";
+import { AppShell, Container, Grid, Header, Navbar } from "@mantine/core";
 import BarChart from "../components/BarChart";
 import { DoughnutChart } from "../components/DoughnutChart";
 import { MultitypeChart } from "../components/MultitypeChart";
@@ -25,7 +18,7 @@ export default function Examples() {
           Chart js examples
         </Header>
       }
-      styles={(theme) => ({
+      styles={() => ({
         main: {
           width: "90vw",
           backgroundColor: "#EBF0F6",

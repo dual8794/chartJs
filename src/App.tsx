@@ -4,7 +4,7 @@ import Examples from "./Pages/Examples";
 function App() {
   return (
     <Routes>
-      <Route path="/examples" element={<Examples />} />
+      <Route path="/" element={<Examples />} />
     </Routes>
   );
 }
