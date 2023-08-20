@@ -1,8 +1,9 @@
 import { AppShell, Container, Grid, Header, Navbar } from "@mantine/core";
 import BarChart from "../components/BarChart";
 import { DoughnutChart } from "../components/DoughnutChart";
-import { MultitypeChart } from "../components/MultitypeChart";
+import MultitypeChart from "../components/MultitypeChart";
 import { LineChart } from "../components/LineChert";
+import { Test } from "../components/test";
 
 export default function Examples() {
   return (
@@ -38,6 +39,9 @@ export default function Examples() {
           </Grid.Col>
           <Grid.Col span={6}>
             <LineChart />
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <Test />
           </Grid.Col>
         </Grid>
       </Container>
