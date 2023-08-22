@@ -76,8 +76,8 @@ export default function MultitypeChart() {
   const chartRef = useRef<ChartJS>(null);
 
   const [selectedChoice, setSelectedChoice] = useState<any>("أرض+تجاري");
-  const [selectedNighborhood] = useState("السليمانية");
-  const [selectedProvince] = useState("الرياض");
+  const [selectedNighborhood, setSelectedNighborhood] = useState("السليمانية");
+  const [selectedProvince, setSelectedProvince] = useState("الرياض");
   const [selectedIndicator, setSelectedIndicator] = useState("yearly");
   const [growthType, setGrowthType] = useState("annual+growth");
   const [measureType, setMeasureType] = useState<any>("total_transactions");
@@ -281,7 +281,24 @@ export default function MultitypeChart() {
           ]}
           onChange={(value: any | null) => {
             setMeasureType(value);
-            console.log(measureType);
+          }}
+        />
+        <Select
+          label="Choose province"
+          placeholder="pick a province"
+          defaultValue={selectedProvince}
+          data={["الرياض", "جدة"]}
+          onChange={(value: any | null) => {
+            setSelectedProvince(value);
+          }}
+        />
+        <Select
+          label="Choose neighborhood"
+          placeholder="pick a neighborhood"
+          defaultValue={selectedNighborhood}
+          data={["السليمانية", "الملقا"]}
+          onChange={(value: any | null) => {
+            setSelectedNighborhood(value);
           }}
         />
       </Group>
