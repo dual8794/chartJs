@@ -77,6 +77,7 @@ export default function MultitypeChart() {
 
   const [selectedChoice, setSelectedChoice] = useState<any>("أرض+تجاري");
   const [selectedNighborhood] = useState("السليمانية");
+  const [selectedProvince] = useState("الرياض");
   const [selectedIndicator, setSelectedIndicator] = useState("yearly");
   const [growthType, setGrowthType] = useState("annual+growth");
   const [measureType, setMeasureType] = useState<any>("total_transactions");
@@ -95,13 +96,14 @@ export default function MultitypeChart() {
   function getMetricsDetails(
     indicator: string,
     metricType: string,
-    neighborhood: string
+    neighborhood: string,
+    province: string
   ) {
     return useQuery(
-      ["metrics", indicator, metricType, neighborhood],
+      ["metrics", indicator, metricType, neighborhood, province],
       async () => {
         const { data } = await axios.get(
-          `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&neighborh_aname=${neighborhood}`
+          `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&province_aname=${province}&neighborh_aname=${neighborhood}`
         );
         return data;
       },
@@ -112,13 +114,15 @@ export default function MultitypeChart() {
   const { data } = getMetricsDetails(
     selectedIndicator,
     selectedChoice,
-    selectedNighborhood
+    selectedNighborhood,
+    selectedProvince
   );
 
   const { data: data2 } = getMetricsDetails(
     growthType,
     selectedChoice,
-    selectedNighborhood
+    selectedNighborhood,
+    selectedProvince
   );
 
   const PPM = data?.reduce(
