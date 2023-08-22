@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -20,7 +20,7 @@ import {
 } from "react-chartjs-2";
 import axios from "axios";
 import { Group, Select } from "@mantine/core";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 ChartJS.register(
   LinearScale,
@@ -82,7 +82,7 @@ export default function MultitypeChart() {
   const [growthType, setGrowthType] = useState("annual+growth");
   const [measureType, setMeasureType] = useState<any>("total_transactions");
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   //   function getMetricsDetails(indicator: string) {
   //     return useQuery(["metrics", indicator], async () => {
