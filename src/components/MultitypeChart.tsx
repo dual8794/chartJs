@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -104,7 +104,8 @@ export default function MultitypeChart() {
           `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&neighborh_aname=${neighborhood}`
         );
         return data;
-      }
+      },
+      { refetchOnWindowFocus: false }
     );
   }
 
@@ -148,7 +149,6 @@ export default function MultitypeChart() {
       } else if (measureType == "volume") {
         metrics2.push(volume);
       }
-
       return metrics2;
     },
     []
@@ -175,67 +175,12 @@ export default function MultitypeChart() {
   //     console.log("2", data2);
   //   }, [data2]);
 
-  const [dataset, setDataset] = useState({
-    labels: labels,
-    datasets: [
-      {
-        type: "line" as const,
-        label: "Growth",
-        backgroundColor: "#C6D936",
-        borderColor: "#C6D936",
-        borderWidth: 2,
-        fill: false,
-        data: PPM2,
-        yAxisID: "y",
-      },
-      {
-        type: "bar" as const,
-        label: measureType,
-        backgroundColor: "#37BADB",
-        borderWidth: 0,
-        borderRadius: 10,
+  useEffect(() => {
+    console.log(PPM);
+    console.log(PPM2);
+  }, [data, data2]);
 
-        data: PPM,
-        borderColor: "#37BADB",
-        fill: false,
-
-        yAxisID: "y1",
-      },
-    ],
-    scales: {
-      y: {
-        type: "linear" as const,
-        position: "left" as const,
-        display: true,
-
-        grid: {
-          display: false,
-        },
-      },
-      y1: {
-        type: "bar" as const,
-        position: "right" as const,
-        display: true,
-
-        grid: {
-          display: false,
-        },
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-  });
-
-  //   useEffect(() => {
-  //     if (selectedIndicator == "yearly") {
-  //       setGrowthType("annual+growth");
-  //     } else if (selectedIndicator == "quarterly") {
-  //       setGrowthType("QoQ");
-  //     }
-  //   }, [selectedIndicator]);
+  const [dataset, setDataset] = useState<any>();
 
   useEffect(() => {
     if (selectedIndicator == "yearly") {
@@ -243,10 +188,10 @@ export default function MultitypeChart() {
     } else if (selectedIndicator == "quarterly") {
       setGrowthType("QoQ");
     }
+    console.log("helllooo");
 
     setDataset({
       labels: labels,
-
       datasets: [
         {
           type: "line" as const,
@@ -297,9 +242,7 @@ export default function MultitypeChart() {
         },
       },
     });
-    queryClient.invalidateQueries(["PPM"]);
-    queryClient.invalidateQueries(["PPM2"]);
-  }, [selectedChoice, selectedIndicator, measureType, growthType]);
+  }, [data, data2]);
 
   return (
     <>
