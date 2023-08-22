@@ -12,7 +12,7 @@ import "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Group, Input, Text } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 
 ChartJS.register(
@@ -58,15 +58,15 @@ export const options = {
 };
 
 export function Test() {
-  const [startDateParam, setStartDateParam] = useState<string | undefined>(
-    "2023-07-20"
-  );
-  const [endDateParam, setEndDateParam] = useState<string | undefined>(
-    "2023-07-22"
-  );
-  const [startDate, setStartDate] = useState("2023-07-20");
-  const [endDate, setEndDate] = useState("2023-07-22");
-  const [elevation, setElevation] = useState(0);
+  // const [startDateParam, setStartDateParam] = useState<string | undefined>(
+  //   "2023-07-20"
+  // );
+  // const [endDateParam, setEndDateParam] = useState<string | undefined>(
+  //   "2023-07-22"
+  // );
+  // const [startDate, setStartDate] = useState("2023-07-20");
+  // const [endDate, setEndDate] = useState("2023-07-22");
+  // const [elevation, setElevation] = useState(0);
   const [array1, setArray1] = useState({});
 
   const getData = async () => {

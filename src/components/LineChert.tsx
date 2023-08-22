@@ -14,7 +14,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Group, Input } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { DateInput } from "@mantine/dates";
 
 ChartJS.register(
   CategoryScale,

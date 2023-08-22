@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -76,7 +76,7 @@ export default function MultitypeChart() {
   const chartRef = useRef<ChartJS>(null);
 
   const [selectedChoice, setSelectedChoice] = useState<any>("أرض+تجاري");
-  const [selectedNighborhood, setSelectedNighborhood] = useState("السليمانية");
+  const [selectedNighborhood] = useState("السليمانية");
   const [selectedIndicator, setSelectedIndicator] = useState("yearly");
   const [growthType, setGrowthType] = useState("annual+growth");
   const [measureType, setMeasureType] = useState<any>("total_transactions");
