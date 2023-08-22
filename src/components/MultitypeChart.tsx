@@ -246,7 +246,7 @@ export default function MultitypeChart() {
         },
       },
     });
-  }, [data, data2]);
+  }, [data, data2, measureType]);
 
   return (
     <>
