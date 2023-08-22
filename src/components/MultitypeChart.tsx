@@ -143,7 +143,7 @@ export default function MultitypeChart() {
     } else {
       metrics.push(metrics_batch_date);
     }
-    return metrics;
+    return metrics.sort();
   }, []);
 
   const PPM2 = data2?.reduce(
