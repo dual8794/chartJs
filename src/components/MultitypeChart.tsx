@@ -101,7 +101,7 @@ export default function MultitypeChart() {
       ["metrics", indicator, metricType, neighborhood],
       async () => {
         const { data } = await axios.get(
-          `http://127.0.0.1:8000/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&neighborh_aname=${neighborhood}`
+          `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&neighborh_aname=${neighborhood}`
         );
         return data;
       }
