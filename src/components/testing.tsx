@@ -77,7 +77,10 @@ export const options = {
 export default function Testing() {
   const chartRef = useRef<ChartJS>(null);
 
-  const [filterValues, setFilterValues] = useState<MetricsFilters>({
+  const [
+    filterValues,
+    // setFilterValues
+  ] = useState<MetricsFilters>({
     indicator: "yearly",
     growth_type: "annual+growth",
     metrics_type: "أرض+تجاري",
@@ -100,7 +103,7 @@ export default function Testing() {
   const [selectedStartDate, setSelectedStartDate] = useState("2010-01-01");
   const [selectedEndDate, setSelectedEndDate] = useState("2022-12-31");
 
-  const [growthType, setGrowthType] = useState("annual+growth");
+  // const [growthType, setGrowthType] = useState("annual+growth");
   const [measureType, setMeasureType] = useState<any>("total_transactions");
 
   // const queryClient = useQueryClient();
@@ -199,13 +202,13 @@ export default function Testing() {
   const [dataset, setDataset] = useState<any>();
 
   useEffect(() => {
-    if (selectedIndicator == "yearly") {
-      setGrowthType("annual+growth");
-    } else if (selectedIndicator == "quarterly") {
-      setGrowthType("QoQ");
-    } else if (selectedIndicator == "monthly") {
-      setGrowthType("MoM");
-    }
+    // if (selectedIndicator == "yearly") {
+    //   setGrowthType("annual+growth");
+    // } else if (selectedIndicator == "quarterly") {
+    //   setGrowthType("QoQ");
+    // } else if (selectedIndicator == "monthly") {
+    //   setGrowthType("MoM");
+    // }
     setDataset({
       labels: labels,
       datasets: [
