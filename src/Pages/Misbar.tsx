@@ -1,6 +1,7 @@
 import { AppShell, Container, Header, Navbar } from "@mantine/core";
 
 import MultitypeChart from "../components/MultitypeChart";
+import Testing from "../components/testing";
 
 export default function Misbar() {
   return (
@@ -25,6 +26,7 @@ export default function Misbar() {
     >
       <Container size="md">
         <MultitypeChart />
+        {/* <Testing /> */}
       </Container>
     </AppShell>
   );

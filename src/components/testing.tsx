@@ -18,10 +18,11 @@ import {
   //   getElementAtEvent,
   //   getElementsAtEvent,
 } from "react-chartjs-2";
-import axios from "axios";
-import { Badge, Group, Select, Stack, ThemeIcon } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { Badge, Group, Select, Stack } from "@mantine/core";
+
 import { DateInput } from "@mantine/dates";
+import { MetricsFilters } from "../types/metrics.typs";
+import { useMetricsDetailsQuery } from "../queries/metrics.query";
 
 ChartJS.register(
   LinearScale,
@@ -73,8 +74,24 @@ export const options = {
   },
 };
 
-export default function MultitypeChart() {
+export default function Testing() {
   const chartRef = useRef<ChartJS>(null);
+
+  const [filterValues, setFilterValues] = useState<MetricsFilters>({
+    indicator: "yearly",
+    growth_type: "annual+growth",
+    metrics_type: "أرض+تجاري",
+    neighborh_aname: "السليمانية",
+    province_aname: "الرياض",
+    start_date: "",
+    end_date: "",
+    start_year: "2010",
+    end_year: "2022",
+    start_month: "",
+    end_month: "",
+    start_quarter: "",
+    end_quarter: "",
+  });
 
   const [selectedChoice, setSelectedChoice] = useState<any>("أرض+تجاري");
   const [selectedNighborhood, setSelectedNighborhood] = useState("السليمانية");
@@ -88,73 +105,20 @@ export default function MultitypeChart() {
 
   // const queryClient = useQueryClient();
 
-  //   function getMetricsDetails(indicator: string) {
-  //     return useQuery(["metrics", indicator], async () => {
-  //       const { data } = await axios.get(
-  //         `http://127.0.0.1:8000/api/metricsdetailed?indicator=${indicator}`
-  //       );
-  //       return data;
-  //     });
-  //   }
-
-  function getMetricsDetails(
-    indicator: string,
-    metricType: string,
-    neighborhood: string,
-    province: string,
-    start_date: string,
-    end_date: string
-    // start_year: string,
-    // end_year: string,
-    // start_month: string,
-    // end_month: string,
-    // start_quarter: string,
-    // end_quarter: string
-  ) {
-    return useQuery(
-      [
-        "metrics",
-        indicator,
-        metricType,
-        neighborhood,
-        province,
-        start_date,
-        end_date,
-        // start_year,
-        // end_year,
-        // start_month,
-        // end_month,
-        // start_quarter,
-        // end_quarter
-      ],
-      async () => {
-        const { data } = await axios.get(
-          // `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&province_aname=${province}&neighborh_aname=${neighborhood}`
-          `https://misbar-backend-chartjs.azurewebsites.net/api/metricsdetailed?indicator=${indicator}&metrics_type=${metricType}&province_aname=${province}
-          &neighborh_aname=${neighborhood}&start_date=${start_date}&end_date=${end_date}`
-          // &start_year=${start_year}&end_year=${end_year}
-          // &start_month=${start_month}&end_month=${end_month}&start_quarter=${start_quarter}&end_quarter=`
-        );
-        return data;
-      },
-      { refetchOnWindowFocus: false }
-    );
-  }
-
-  const { data } = getMetricsDetails(
-    selectedIndicator,
-    selectedChoice,
-    selectedNighborhood,
-    selectedProvince,
+  const { data } = useMetricsDetailsQuery(
+    filterValues.indicator,
+    filterValues.metrics_type,
+    filterValues.neighborh_aname,
+    filterValues.province_aname,
     selectedStartDate,
     selectedEndDate
   );
 
-  const { data: data2 } = getMetricsDetails(
-    growthType,
-    selectedChoice,
-    selectedNighborhood,
-    selectedProvince,
+  const { data: data2 } = useMetricsDetailsQuery(
+    filterValues.growth_type,
+    filterValues.metrics_type,
+    filterValues.neighborh_aname,
+    filterValues.province_aname,
     selectedStartDate,
     selectedEndDate
   );
@@ -211,6 +175,21 @@ export default function MultitypeChart() {
     { label: "مرافق", value: "مرافق" },
     { label: "الكل", value: "الكل" },
   ];
+
+  // const monthsList = [
+  //   { label: "January", value: "01" },
+  //   { label: "February", value: "02" },
+  //   { label: "March", value: "03" },
+  //   { label: "April", value: "04" },
+  //   { label: "May", value: "05" },
+  //   { label: "June", value: "06" },
+  //   { label: "July", value: "07" },
+  //   { label: "August", value: "08" },
+  //   { label: "September", value: "09" },
+  //   { label: "October", value: "10" },
+  //   { label: "November", value: "11" },
+  //   { label: "December", value: "12" },
+  // ];
 
   // useEffect(() => {
   //   console.log(PPM);
@@ -296,7 +275,7 @@ export default function MultitypeChart() {
 
   return (
     <>
-      <Group pb={5}>
+      <Group>
         <Select
           label="Metrics type"
           placeholder="pick a metric type"
@@ -403,14 +382,13 @@ export default function MultitypeChart() {
           }}
         />
       </Group>
-      <ThemeIcon size={150} color="cyan" variant="light">
-        <Stack>
-          <span> Total transactions </span>
-          <Badge className="text-xs" color="cyan">
-            {convertToInternationalCurrencySystem(total_transactions)}{" "}
-          </Badge>
-        </Stack>
-      </ThemeIcon>
+
+      <Stack align="flex-end">
+        <span> Total transactions </span>
+        <Badge className="text-xs">
+          {convertToInternationalCurrencySystem(total_transactions)}{" "}
+        </Badge>
+      </Stack>
 
       {dataset && (
         <Chart
