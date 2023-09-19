@@ -1,6 +1,4 @@
 import { AppShell, Container, Grid, Header, Navbar } from "@mantine/core";
-import BarChart from "../components/BarChart";
-import { DoughnutChart } from "../components/DoughnutChart";
 import MultitypeChart from "../components/MultitypeChart";
 import { LineChart } from "../components/LineChert";
 import { Test } from "../components/test";
@@ -28,12 +26,8 @@ export default function Examples() {
     >
       <Container size="md">
         <Grid grow>
-          <Grid.Col span={6}>
-            <BarChart />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <DoughnutChart />
-          </Grid.Col>
+          <Grid.Col span={6}>{/* <BarChart /> */}</Grid.Col>
+          <Grid.Col span={4}>{/* <DoughnutChart /> */}</Grid.Col>
           <Grid.Col span={6}>
             <MultitypeChart />
           </Grid.Col>

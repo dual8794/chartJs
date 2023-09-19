@@ -2,73 +2,178 @@ import { useQuery } from "@tanstack/react-query";
 // import { MetricsResponse } from "../types/metrics.typs"
 // import { UseFormReturnType } from "@mantine/form";
 import axios from "axios";
+import {
+  MetricsFilters,
+  Neighborhood,
+  Province,
+  Region,
+  propertyType,
+} from "../types/metrics.typs";
 
-const getMetricsDetails = async (
-    indicator?: string,
-    metrics_type?: string,
-    neighborh_aname?: string,
-    province_aname?: string,
-    start_date?: string,
-    end_date?: string,
-    start_year?: string,
-    end_year?: string,
-    start_month?: string,
-    end_month?: string,
-    start_quarter?: string,
-    end_quarter?: string )=> {
-    const response = await axios.get(
-        "http://127.0.0.1:8000/api/metricsdetailed" + `?${indicator? "indicator=" + indicator: ""}${metrics_type? "&metrics_type=" + metrics_type: ""}
-        ${neighborh_aname? "&neighborh_aname=" + neighborh_aname: ""}${province_aname? "&province_aname=" + province_aname: ""}${start_date? "&start_date=" + start_date: ""}
-        ${end_date? "&end_date=" + end_date: ""}${start_year? "&start_year=" + start_year: ""}${end_year? "&end_year=" + end_year: ""}${start_month? "&start_month=" + start_month: ""}
-        ${end_month? "&end_month=" + end_month: ""}${start_quarter? "&start_quarter=" + start_quarter: ""}${end_quarter? "&end_quarter=" + end_quarter: ""}`
-    )
-    return response.data;
+const getTransactionsGrowth = async (
+  filters?: MetricsFilters
+  // date_level?: string,
+  // region_id?: string,
+  // province_id?: string,
+  // neighborhood_id?: string,
+  // property_type_id?: number,
+  // start_date?: string,
+  // end_date?: string,
+) => {
+  const response = await axios.get(
+    "http://127.0.0.1:8000/api/transaction/growth/" +
+      `?${filters?.date_level ? "date_level=" + filters?.date_level : ""}${
+        filters?.region_id ? "&region_id=" + filters?.region_id : ""
+      }
+      ${filters?.start_date ? "&start_date=" + filters?.start_date : ""}${
+        filters?.end_date ? "&end_date=" + filters?.end_date : ""
+      }
+        ${filters?.province_id ? "&province_id=" + filters?.province_id : ""}${
+        filters?.neighborhood_id
+          ? "&neighborhood_id=" + filters?.neighborhood_id
+          : ""
+      }${
+        filters?.property_type_id
+          ? "&property_type_id=" + filters?.property_type_id
+          : ""
+      }`
+  );
+  return response.data;
+};
 
-}
+export const useTransactionsGrowthQuery = (
+  filters?: MetricsFilters
+  // date_level?: string,
+  // region_id?: string,
+  // province_id?: string,
+  // neighborhood_id?: string,
+  // property_type_id?: number,
+  // start_date?: string,
+  // end_date?: string,
+) =>
+  useQuery(
+    [
+      "transactions",
+      filters,
+      // date_level,
+      // region_id,
+      // province_id,
+      // neighborhood_id,
+      // property_type_id,
+      // start_date,
+      // end_date,
+    ],
+    () =>
+      getTransactionsGrowth(
+        filters
 
-export const useMetricsDetailsQuery = ( 
-    indicator?: string,
-    metrics_type?: string,
-    neighborh_aname?: string,
-    province_aname?: string,
-    start_date?: string,
-    end_date?: string,
-    start_year?: string,
-    end_year?: string,
-    start_month?: string,
-    end_month?: string,
-    start_quarter?: string,
-    end_quarter?: string
-    ) => 
-      useQuery(
-        [
-            "metrics",
-            indicator,
-            metrics_type,
-            neighborh_aname,
-            province_aname,
-            start_date,
-            end_date,
-            start_year,
-            end_year,
-            start_month,
-            end_month,
-            start_quarter,
-            end_quarter,
-        ],
-        () => getMetricsDetails(  indicator,
-            metrics_type,
-            neighborh_aname,
-            province_aname,
-            start_date,
-            end_date,
-            start_year,
-            end_year,
-            start_month,
-            end_month,
-            start_quarter,
-            end_quarter,),
+        // date_level,
+        // region_id,
+        // province_id,
+        // neighborhood_id,
+        // property_type_id,
+        // start_date,
+        // end_date,
+      ),
 
-        { refetchOnWindowFocus: false }
-      );
-    
+    { refetchOnWindowFocus: false }
+  );
+
+const getRegions = async () => {
+  const response = await axios.get("http://127.0.0.1:8000/api/regions/");
+  return response.data;
+};
+
+export const useRegionsQuery = () =>
+  useQuery<Region[]>(["regions"], () => getRegions(), {
+    refetchOnWindowFocus: false,
+  });
+
+const getProvinces = async (region_id?: string) => {
+  const response = await axios.get(
+    "http://127.0.0.1:8000/api/provinces/" +
+      `?${region_id ? "&region_id=" + region_id : ""}`
+  );
+  return response.data;
+};
+
+export const useProvincesQuery = (region_id?: string) =>
+  useQuery<Province[]>(
+    ["provinces", region_id],
+    () => getProvinces(region_id),
+    { refetchOnWindowFocus: false }
+  );
+
+const getNeighborhoods = async (province_id?: string) => {
+  const response = await axios.get(
+    "http://127.0.0.1:8000/api/neighborhood/" +
+      `?${province_id ? "&province_id=" + province_id : ""}`
+  );
+  return response.data;
+};
+
+export const useNeighborhoodsQuery = (province_id?: string) =>
+  useQuery<Neighborhood[]>(
+    ["neighborhoods", province_id],
+    () => getNeighborhoods(province_id),
+    { refetchOnWindowFocus: false }
+  );
+
+const getPropertyType = async () => {
+  const response = await axios.get("http://127.0.0.1:8000/api/propertyType/");
+  return response.data;
+};
+
+export const usePropertyTypesQuery = () =>
+  useQuery<propertyType[]>(["propertyTypes"], () => getPropertyType(), {
+    refetchOnWindowFocus: false,
+  });
+
+const getPropertyTypeChart = async (  
+  date_level?: string,
+region_id?: string,
+province_id?: string,
+neighborhood_id?: string,
+start_date?: string,
+end_date?: string,
+) => {
+  const response = await axios.get(
+    "http://127.0.0.1:8000/api/transaction/property/" +
+      `?${date_level ? "date_level=" + date_level : ""}${
+        region_id ? "&region_id=" + region_id : ""
+      }
+    ${start_date ? "&start_date=" + start_date : ""}${
+        end_date ? "&end_date=" + end_date : ""
+      }
+      ${province_id ? "&province_id=" + province_id : ""}${
+        neighborhood_id
+          ? "&neighborhood_id=" + neighborhood_id
+          : ""
+      }`
+  );
+  return response.data;
+};
+
+export const usePropertyTypeChartQuery = (  date_level?: string,
+  region_id?: string,
+  province_id?: string,
+  neighborhood_id?: string,
+  start_date?: string,
+  end_date?: string,) =>
+  useQuery(
+    ["propertyTypeChart", 
+          date_level,
+        region_id,
+        province_id,
+        neighborhood_id,
+        start_date,
+        end_date,
+  ],
+    () => getPropertyTypeChart(          date_level,
+      region_id,
+      province_id,
+      neighborhood_id,
+      start_date,
+      end_date,),
+    { refetchOnWindowFocus: false }
+  );

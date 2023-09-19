@@ -8,7 +8,6 @@ import {
   Legend,
 } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 
 ChartJS.register(
   CategoryScale,
@@ -19,18 +18,15 @@ ChartJS.register(
   Legend
 );
 
-export const plugin = {};
+import { MouseEvent } from "react";
 
 export const options = {
-  //   scales: {
-  //     y: { min: 0, max: 1000, display: true },
-
-  //   },
-
+  devicePixelRatio: 2,
   scales: {
     y: {
-      min: 0,
-      max: 1000,
+      title: {
+        display: true,
+      },
       display: true,
       grid: {
         display: false,
@@ -49,49 +45,74 @@ export const options = {
     },
   },
   responsive: true,
-  //   aspectRatio: 0.5,
-  stacked: false,
-  legend: {
-    position: "top" as const,
-  },
+  stacked: true,
   plugins: {
     customCanvasBackgroundColor: {
       color: "#FFFFFF",
     },
-    // legend: {
-    //   position: "top" as const,
-    // },
+    legend: { display: false },
     title: {
-      display: true,
-      text: "Chart.js Bar Chart",
+      display: false,
     },
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const options2 = {
+  devicePixelRatio: 2,
+  scales: {
+    y: {
+      display: true,
+      title: {
+        display: true,
+        text: "Avg price/ meter",
+      },
+      grid: {
+        display: false,
+      },
+    },
+    x: {
+      display: false,
+      grid: {
+        display: false,
+      },
+    },
+  },
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "#4BB5B2",
-      borderRadius: 10,
+  elements: {
+    bar: {
+      borderWidth: 0,
     },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 800 })),
-      backgroundColor: "#4262A9",
-      borderRadius: 10,
+  },
+  responsive: true,
+  plugins: {
+    customCanvasBackgroundColor: {
+      color: "#FFFFFF",
     },
-  ],
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Avg price/meter per property type chart",
+    },
+  },
 };
 
-export default function BarChart() {
+interface Props {
+  dataset: any;
+  ref?: any;
+  onClick?: (event: MouseEvent<HTMLCanvasElement>) => void;
+  labels?: boolean;
+}
+export default function BarChart(props: Props) {
   return (
     <>
-      <Bar options={options} data={data} />
+      <Bar
+        ref={props.ref}
+        options={props.labels ? options : options2}
+        data={props.dataset}
+        onClick={props.onClick}
+      />
     </>
   );
 }
