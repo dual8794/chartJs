@@ -8,7 +8,7 @@ const getAreas = async (
 
         )=> {
         const response = await axios.get(
-            "http://127.0.0.1:8000/api/transaction/area-categorized/"  +
+            "https://misbar-backend-chartjs.azurewebsites.net/api/transaction/area-categorized/"  +
             `?${filters?.date_level ? "date_level=" + filters?.date_level : ""}${
               filters?.region_id ? "&region_id=" + filters?.region_id : ""
             }

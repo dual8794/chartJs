@@ -21,7 +21,7 @@ const getTransactionsGrowth = async (
   // end_date?: string,
 ) => {
   const response = await axios.get(
-    "http://127.0.0.1:8000/api/transaction/growth/" +
+    "https://misbar-backend-chartjs.azurewebsites.net/api/transaction/growth/" +
       `?${filters?.date_level ? "date_level=" + filters?.date_level : ""}${
         filters?.region_id ? "&region_id=" + filters?.region_id : ""
       }
@@ -80,7 +80,7 @@ export const useTransactionsGrowthQuery = (
   );
 
 const getRegions = async () => {
-  const response = await axios.get("http://127.0.0.1:8000/api/regions/");
+  const response = await axios.get("https://misbar-backend-chartjs.azurewebsites.net/api/regions/");
   return response.data;
 };
 
@@ -91,7 +91,7 @@ export const useRegionsQuery = () =>
 
 const getProvinces = async (region_id?: string) => {
   const response = await axios.get(
-    "http://127.0.0.1:8000/api/provinces/" +
+    "https://misbar-backend-chartjs.azurewebsites.net/api/provinces/" +
       `?${region_id ? "&region_id=" + region_id : ""}`
   );
   return response.data;
@@ -106,7 +106,7 @@ export const useProvincesQuery = (region_id?: string) =>
 
 const getNeighborhoods = async (province_id?: string) => {
   const response = await axios.get(
-    "http://127.0.0.1:8000/api/neighborhood/" +
+    "https://misbar-backend-chartjs.azurewebsites.net/api/neighborhood/" +
       `?${province_id ? "&province_id=" + province_id : ""}`
   );
   return response.data;
@@ -120,7 +120,7 @@ export const useNeighborhoodsQuery = (province_id?: string) =>
   );
 
 const getPropertyType = async () => {
-  const response = await axios.get("http://127.0.0.1:8000/api/propertyType/");
+  const response = await axios.get("https://misbar-backend-chartjs.azurewebsites.net/api/propertyType/");
   return response.data;
 };
 
@@ -138,7 +138,7 @@ start_date?: string,
 end_date?: string,
 ) => {
   const response = await axios.get(
-    "http://127.0.0.1:8000/api/transaction/property/" +
+    "https://misbar-backend-chartjs.azurewebsites.net/api/transaction/property/" +
       `?${date_level ? "date_level=" + date_level : ""}${
         region_id ? "&region_id=" + region_id : ""
       }

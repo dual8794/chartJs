@@ -1027,19 +1027,9 @@ export default function Testing() {
           )}
           <Space h="xl" />
 
-          {predictions_chart && (
-            <>
-              <Stack>
-                <Card shadow="sm" padding={40} radius="md" withBorder>
-                  {" "}
-                  <Container size={300}>
-                    <Text size="md" fw={700} ta="center">
-                      parcels predictions{" "}
-                    </Text>
-                    {/* <Space h="xl" /> */}
-                    <DoughnutChart dataset={dataset6} total={parcel_count} />
-                  </Container>
-                </Card>
+          <Stack>
+            {sakani_chart && (
+              <>
                 <Card shadow="sm" padding={40} radius="md" withBorder>
                   <Container size={400}>
                     <Text size="md" fw={700} ta="center">
@@ -1052,9 +1042,23 @@ export default function Testing() {
                     />
                   </Container>
                 </Card>
-              </Stack>
-            </>
-          )}
+              </>
+            )}
+            {predictions_chart && (
+              <>
+                <Card shadow="sm" padding={40} radius="md" withBorder>
+                  {" "}
+                  <Container size={300}>
+                    <Text size="md" fw={700} ta="center">
+                      parcels predictions{" "}
+                    </Text>
+                    {/* <Space h="xl" /> */}
+                    <DoughnutChart dataset={dataset6} total={parcel_count} />
+                  </Container>
+                </Card>
+              </>
+            )}
+          </Stack>
         </Grid.Col>
         <Grid.Col span={5}>
           {dataset && (

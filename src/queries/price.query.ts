@@ -6,7 +6,7 @@ const getPrices = async (
   filters?: MetricsFilters
 ) => {
   const response = await axios.get(
-    "http://127.0.0.1:8000/api/transaction/avg_price_per_meter/" +
+    "https://misbar-backend-chartjs.azurewebsites.net/api/transaction/avg_price_per_meter/" +
     `?${filters?.date_level ? "date_level=" + filters?.date_level : ""}${
       filters?.region_id ? "&region_id=" + filters?.region_id : ""
     }

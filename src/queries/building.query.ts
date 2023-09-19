@@ -7,7 +7,7 @@ const getBuilding = async (
 
         )=> {
         const response = await axios.get(
-            "http://127.0.0.1:8000/api/parcels/predictions/"  +
+            "https://misbar-backend-chartjs.azurewebsites.net/api/parcels/predictions/"  +
             `?${
                 neighborhood_id ? "&neighborhood_id=" + neighborhood_id : ""
             }${year ? "&year=" + year : ""}`

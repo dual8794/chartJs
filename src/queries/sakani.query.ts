@@ -12,7 +12,7 @@ const getSakani = async (
 
         )=> {
         const response = await axios.get(
-            "http://127.0.0.1:8000/api/transaction/sakani-commercial/"  +
+            "https://misbar-backend-chartjs.azurewebsites.net/api/transaction/sakani-commercial/"  +
             `?${date_level ? "date_level=" + date_level : ""}${
               region_id ? "&region_id=" + region_id : ""
             }
